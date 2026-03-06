@@ -75,17 +75,7 @@ export function renderStarsChart(
   console.log(dateRow(width, fmtDate(data[0].date), fmtDate(data[data.length - 1].date)));
   console.log('');
 
-  let peakDate = '';
-  let peakDaily = 0;
-  for (let i = 1; i < data.length; i++) {
-    const daily = data[i].cumulative - data[i - 1].cumulative;
-    if (daily > peakDaily) { peakDaily = daily; peakDate = data[i].date; }
-  }
-
   console.log(`  ${pc.gray('First star   ')}${fmtDateLong(data[0].date)}`);
-  if (peakDate) {
-    console.log(`  ${pc.gray('Peak day     ')}${fmtDateLong(peakDate)}  ${pc.yellow(`+${peakDaily.toLocaleString()} stars`)}`);
-  }
   console.log('');
 }
 
