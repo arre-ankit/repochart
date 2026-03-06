@@ -2,6 +2,29 @@
   "name": "repochart",
   "version": "0.0.1",
   "description": "GitHub repository analytics · in your terminal",
+  "license": "MIT",
+  "repository": "arre-ankit/repochart",
+  "author": {
+    "name": "Ankit Kumar",
+    "email": "arre.ankit@gmail.com",
+    "url": "https://x.com/arre_ankit"
+  },
+  "keywords": [
+    "github",
+    "cli",
+    "analytics",
+    "stats",
+    "terminal",
+    "charts",
+    "stars",
+    "commits",
+    "contributors",
+    "languages",
+    "repository"
+  ],
+  "files": [
+    "dist"
+  ],
   "bin": {
     "repochart": "./dist/cli.js"
   },
