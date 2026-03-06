@@ -1,0 +1,32 @@
+{
+  "name": "repopulse",
+  "version": "0.0.1",
+  "description": "GitHub repository analytics charts CLI",
+  "bin": {
+    "repopulse": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.9.1",
+    "@napi-rs/canvas": "^0.1.57",
+    "chart.js": "^4.4.7",
+    "commander": "^12.1.0",
+    "figlet": "^1.8.0",
+    "ora": "^8.1.1",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.5.8",
+    "@types/node": "^22.0.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@napi-rs/canvas", "esbuild"]
+  }
+}
