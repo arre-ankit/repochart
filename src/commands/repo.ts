@@ -23,6 +23,7 @@ type ChartType = 'stars' | 'commits' | 'contributors' | 'languages';
 
 interface RepoOptions {
   chart: ChartType;
+  overview?: boolean;
   readmeStars?: boolean;
   output?: string;
   all?: boolean;
@@ -71,6 +72,27 @@ export async function handleRepo(repo: string, options: RepoOptions): Promise<vo
   }).start();
 
   try {
+    // ── Overview: all charts ──────────────────────────────────────────────────
+    if (options.overview) {
+      spinner.text = 'Fetching repo info...';
+      const repoInfo = await fetchRepoInfo(owner, repoName);
+
+      spinner.text = `Fetching all stats for ${pc.cyan(`${owner}/${repoName}`)}...`;
+      const [{ stargazers, capped }, weeks, contributors, languages] = await Promise.all([
+        fetchStargazersSampled(owner, repoName, repoInfo.stargazers_count),
+        fetchCommitActivity(owner, repoName),
+        fetchContributors(owner, repoName),
+        fetchLanguages(owner, repoName),
+      ]);
+      spinner.stop();
+
+      renderStarsChart(processStarsData(stargazers), owner, repoName, repoInfo.stargazers_count, capped);
+      renderCommitsChart(weeks, owner, repoName);
+      renderContributorsChart(contributors, owner, repoName);
+      renderLanguagesChart(languages, owner, repoName);
+      return;
+    }
+
     // ── README SVG ────────────────────────────────────────────────────────────
     if (options.readmeStars) {
       spinner.text = 'Fetching repo info...';

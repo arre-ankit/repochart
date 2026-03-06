@@ -20,6 +20,7 @@ program
   .helpOption('-h, --help')
   .argument('<repo>', 'Repository in owner/repo format (e.g., vercel/next.js)')
   .option('--chart <type>', 'Chart type: stars | commits | contributors | languages', 'stars')
+  .option('--overview', 'Show all stats at once: stars, commits, contributors, languages')
   .option('--readme-stars', 'Generate a stars.svg badge for README embedding')
   .option('--output <path>', 'Output file path (default: <type>-chart.png or stars.svg)')
   .option('--all', 'Fetch all pages — may be slow for large repos')
