@@ -141,4 +141,4 @@ MIT
 
 ---
 
-Built with [commandcode](https://commandcode.ai) by [@saqibameen](https://x.com/saqibameen)
+Built with [commandcode](https://commandcode.ai) by [@arre_ankit](https://x.com/arre_ankit)
