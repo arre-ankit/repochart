@@ -14,8 +14,8 @@ if (!isVersionOrHelp) showBanner();
 const program = new Command();
 
 program
-  .name('repopulse')
-  .description('GitHub repository analytics charts')
+  .name('repochart')
+  .description('GitHub repository analytics · in your terminal')
   .version(pkg.version, '-v, --version')
   .helpOption('-h, --help')
   .argument('<repo>', 'Repository in owner/repo format (e.g., vercel/next.js)')

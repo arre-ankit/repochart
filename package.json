@@ -1,9 +1,9 @@
 {
-  "name": "repopulse",
+  "name": "repochart",
   "version": "0.0.1",
-  "description": "GitHub repository analytics charts CLI",
+  "description": "GitHub repository analytics · in your terminal",
   "bin": {
-    "repopulse": "./dist/cli.js"
+    "repochart": "./dist/cli.js"
   },
   "scripts": {
     "build": "tsup",
