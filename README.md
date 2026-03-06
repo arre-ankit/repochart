@@ -1,6 +1,6 @@
 # RepoChart
 
-![RepoChart Cover](https://raw.githubusercontent.com/arre-ankit/repochart/refs/heads/main/.github/cover.svg)
+![RepoChart Cover](https://raw.githubusercontent.com/arre-ankit/repochart/refs/heads/main/.github/cover.png)
 
 GitHub repository analytics — right from your terminal.
 
