@@ -25,9 +25,13 @@ gh auth login
 ## Install
 
 ```bash
-pnpm install
-pnpm build
-npm link   # or: node dist/cli.js
+npm install -g repochart
+```
+
+Or run without installing:
+
+```bash
+npx repochart vercel/next.js --overview
 ```
 
 ## Usage
@@ -61,7 +65,7 @@ Options:
 ## Compare two repos side by side
 
 ```bash
-repochart compare vercel/next.js facebook/react
+npx repochart compare vercel/next.js facebook/react
 ```
 
 Fetches all stats for both repos in parallel and renders them side by side in the terminal, split by a `│` divider:
@@ -103,7 +107,7 @@ The winner in total stars and total commits is highlighted in **green**.
 ## Overview — all stats at once
 
 ```bash
-repochart vercel/next.js --overview
+npx repochart vercel/next.js --overview
 ```
 
 Fetches stars, commits, contributors, and languages in parallel and renders all four charts sequentially in your terminal.
@@ -115,14 +119,13 @@ RepoChart uses the **GitHub CLI** (`gh`) for all API calls — no tokens to mana
 ## Examples
 
 ```bash
-# Compare two repos side by side
-repochart compare vercel/next.js facebook/react
+# No install needed — run directly with npx
+npx repochart vercel/next.js --overview
+npx repochart compare vercel/next.js facebook/react
+
+# Or install globally and drop the npx
+npm install -g repochart
 repochart compare microsoft/vscode neovim/neovim
-
-# All stats in one shot
-repochart vercel/next.js --overview
-
-# Individual charts
 repochart ankitlb/commandcode --chart stars
 repochart vercel/next.js --chart commits
 repochart microsoft/vscode --chart languages
