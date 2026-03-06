@@ -139,6 +139,10 @@ pnpm test         # run vitest
 
 MIT
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
+
 ---
 
 Built with [commandcode](https://commandcode.ai) by [@arre_ankit](https://x.com/arre_ankit)

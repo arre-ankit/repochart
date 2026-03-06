@@ -30,6 +30,7 @@ See [code-style/taste.md](code-style/taste.md)
 # git
 - Follow Conventional Commits format: `<type>: <description>` with optional body. Confidence: 0.90
 - Conventional Commit types to use: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`. Confidence: 0.90
+- For version release commits, use rocket emoji format: `🚀 RELEASE: v0.0.x`. Confidence: 0.80
 
 # github-api
 - Use the GitHub CLI (`gh api`) for GitHub API calls instead of direct fetch + token management; `gh` handles auth automatically via `gh auth login`. Confidence: 0.70
@@ -38,6 +39,9 @@ See [code-style/taste.md](code-style/taste.md)
 
 # canvas
 - Use `@napi-rs/canvas` instead of `canvas` (node-canvas) or `chartjs-node-canvas` for server-side canvas rendering; it uses NAPI-RS (ABI-stable, prebuilt binaries for all platforms, no system Cairo required). Confidence: 0.70
+
+# markdown
+- Link images/assets in markdown using absolute raw GitHub URLs (e.g., `https://raw.githubusercontent.com/owner/repo/refs/heads/main/.github/cover.ext`) instead of relative paths. Confidence: 0.75
 
 # terminal-output
 - Prefer rendering output directly in the terminal over saving to files when possible. Confidence: 0.65
