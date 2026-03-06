@@ -30,8 +30,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch",
-    "test": "vitest"
+    "dev": "tsup --watch"
   },
   "dependencies": {
     "@clack/prompts": "^0.9.1",
