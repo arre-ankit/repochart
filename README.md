@@ -134,3 +134,11 @@ pnpm install
 pnpm build        # compile TypeScript → dist/
 pnpm test         # run vitest
 ```
+
+## License
+
+MIT
+
+---
+
+Built with [commandcode](https://commandcode.ai) by [@saqibameen](https://x.com/saqibameen)
