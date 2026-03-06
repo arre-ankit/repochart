@@ -11,13 +11,20 @@ function visibleLen(s: string): number {
   return stripAnsi(s).length;
 }
 
-function padVisible(s: string, width: number): string {
-  return s + ' '.repeat(Math.max(0, width - visibleLen(s)));
+// Pad OR truncate a string to exactly `width` visible characters.
+function fitVisible(s: string, width: number): string {
+  const vis = visibleLen(s);
+  if (vis < width) return s + ' '.repeat(width - vis);
+  if (vis === width) return s;
+  // Need to truncate — walk chars keeping a running visible count.
+  // We strip ANSI for simplicity; colour in overflowing lines is rare.
+  const plain = stripAnsi(s);
+  return plain.slice(0, width);
 }
 
 function colW(): number {
-  const term = process.stdout.columns || 100;
-  return Math.max(30, Math.floor((term - 5) / 2));
+  const term = process.stdout.columns || 120;
+  return Math.max(36, Math.floor((term - 5) / 2));
 }
 
 function fmtNum(n: number): string {
@@ -58,7 +65,7 @@ function sideBySide(left: string[], right: string[], col: number): void {
   const len = Math.max(left.length, right.length);
   const div = pc.gray('│');
   for (let i = 0; i < len; i++) {
-    const l = padVisible(left[i] ?? '', col);
+    const l = fitVisible(left[i] ?? '', col);
     const r = right[i] ?? '';
     console.log(`${l}  ${div}  ${r}`);
   }
@@ -87,6 +94,7 @@ export interface CompareData {
 
 export function renderComparison(d: CompareData): void {
   const col = colW();
+  // sparkline fills col minus the 2-char left indent
   const sparkW = col - 2;
 
   console.log('');
@@ -102,14 +110,14 @@ export function renderComparison(d: CompareData): void {
   // ── Stars ─────────────────────────────────────────────────────────────────
   console.log('');
   const starsWinner = d.totalStarsA >= d.totalStarsB;
-  const starsNumA = starsWinner ? pc.green(pc.bold(fmtNum(d.totalStarsA))) : pc.dim(fmtNum(d.totalStarsA));
-  const starsNumB = !starsWinner ? pc.green(pc.bold(fmtNum(d.totalStarsB))) : pc.dim(fmtNum(d.totalStarsB));
+  const starsNumA = starsWinner
+    ? pc.green(pc.bold(fmtNum(d.totalStarsA)))
+    : pc.dim(fmtNum(d.totalStarsA));
+  const starsNumB = !starsWinner
+    ? pc.green(pc.bold(fmtNum(d.totalStarsB)))
+    : pc.dim(fmtNum(d.totalStarsB));
 
-  sideBySide(
-    [pc.bold('⭐ Stars')],
-    [pc.bold('⭐ Stars')],
-    col
-  );
+  sideBySide([pc.bold('⭐ Stars')], [pc.bold('⭐ Stars')], col);
   sideBySide(
     [`  ${starsNumA} total stars`],
     [`  ${starsNumB} total stars`],
@@ -137,8 +145,12 @@ export function renderComparison(d: CompareData): void {
   const totalCommitsA = d.commitsA.reduce((s, w) => s + w.count, 0);
   const totalCommitsB = d.commitsB.reduce((s, w) => s + w.count, 0);
   const commitsWinner = totalCommitsA >= totalCommitsB;
-  const commitsNumA = commitsWinner ? pc.green(pc.bold(totalCommitsA.toLocaleString())) : pc.dim(totalCommitsA.toLocaleString());
-  const commitsNumB = !commitsWinner ? pc.green(pc.bold(totalCommitsB.toLocaleString())) : pc.dim(totalCommitsB.toLocaleString());
+  const commitsNumA = commitsWinner
+    ? pc.green(pc.bold(totalCommitsA.toLocaleString()))
+    : pc.dim(totalCommitsA.toLocaleString());
+  const commitsNumB = !commitsWinner
+    ? pc.green(pc.bold(totalCommitsB.toLocaleString()))
+    : pc.dim(totalCommitsB.toLocaleString());
 
   const peakA = d.commitsA.length ? Math.max(...d.commitsA.map((w) => w.count)) : 0;
   const peakB = d.commitsB.length ? Math.max(...d.commitsB.map((w) => w.count)) : 0;
@@ -150,11 +162,7 @@ export function renderComparison(d: CompareData): void {
     [pc.bold('📊 Commits') + pc.gray('  last 52 weeks')],
     col
   );
-  sideBySide(
-    [`  ${commitsNumA} commits`],
-    [`  ${commitsNumB} commits`],
-    col
-  );
+  sideBySide([`  ${commitsNumA} commits`], [`  ${commitsNumB} commits`], col);
 
   if (d.commitsA.length > 0 || d.commitsB.length > 0) {
     sideBySide(
@@ -181,8 +189,11 @@ export function renderComparison(d: CompareData): void {
   const maxContribB = topB[0]?.contributions ?? 1;
   const maxLoginA = Math.max(...topA.map((c) => c.login.length), 4);
   const maxLoginB = Math.max(...topB.map((c) => c.login.length), 4);
-  const barWA = Math.max(8, col - maxLoginA - 14);
-  const barWB = Math.max(8, col - maxLoginB - 14);
+
+  // Line layout: "  " + rank(2) + "  " + login(maxLogin) + "  " + bar(barW) + "  " + count(6)
+  // Fixed chars = 2+2+2+2+2 = 10, count reserved = 6  →  barW = col - 10 - maxLogin - 6
+  const barWA = Math.max(6, col - 18 - maxLoginA);
+  const barWB = Math.max(6, col - 18 - maxLoginB);
 
   sideBySide(
     [pc.bold('👥 Contributors') + pc.gray(`  ${d.contributorsA.length.toLocaleString()} total`)],
@@ -209,10 +220,11 @@ export function renderComparison(d: CompareData): void {
   console.log('');
 
   const LANG_COLOR: Record<string, (s: string) => string> = {
-    TypeScript: pc.blue, JavaScript: pc.yellow, Python: pc.blue,
-    Go: pc.cyan, Ruby: pc.red, CSS: pc.magenta, HTML: pc.red,
-    Shell: pc.green, Vue: pc.green, Svelte: pc.red,
-    Kotlin: pc.magenta, Swift: pc.red, Rust: pc.yellow, Dart: pc.cyan,
+    TypeScript: pc.blue,  JavaScript: pc.yellow, Python: pc.blue,
+    Go: pc.cyan,          Ruby: pc.red,           CSS: pc.magenta,
+    HTML: pc.red,         Shell: pc.green,        Vue: pc.green,
+    Svelte: pc.red,       Kotlin: pc.magenta,     Swift: pc.red,
+    Rust: pc.yellow,      Dart: pc.cyan,
   };
 
   const totalBytesA = Object.values(d.languagesA).reduce((a, b) => a + b, 0);
@@ -221,14 +233,13 @@ export function renderComparison(d: CompareData): void {
   const langsB = Object.entries(d.languagesB).sort(([, a], [, b]) => b - a).slice(0, 6);
   const maxLangA = Math.max(...langsA.map(([l]) => l.length), 4);
   const maxLangB = Math.max(...langsB.map(([l]) => l.length), 4);
-  const langBarWA = Math.max(8, col - maxLangA - 10);
-  const langBarWB = Math.max(8, col - maxLangB - 10);
 
-  sideBySide(
-    [pc.bold('🌐 Languages')],
-    [pc.bold('🌐 Languages')],
-    col
-  );
+  // Line layout: "  " + lang(maxLang) + "  " + bar(langBarW) + "  " + pct(6)
+  // Fixed chars = 2+2+2 = 6, pct = 6  →  langBarW = col - 12 - maxLang
+  const langBarWA = Math.max(6, col - 12 - maxLangA);
+  const langBarWB = Math.max(6, col - 12 - maxLangB);
+
+  sideBySide([pc.bold('🌐 Languages')], [pc.bold('🌐 Languages')], col);
 
   const langRows = Math.max(langsA.length, langsB.length);
   for (let i = 0; i < langRows; i++) {

@@ -24,6 +24,9 @@ See [code-style/taste.md](code-style/taste.md)
 # slash-commands
 - Prefer creating slash commands at user-level (global, `~/.commandcode/commands/`) rather than project-level. Confidence: 0.75
 
+# plans
+- Write plan files inside the project directory (e.g., `./plans/` or `.commandcode/plans/` within the repo), not globally in `~/.commandcode/plans/`. Confidence: 0.75
+
 # git
 - Follow Conventional Commits format: `<type>: <description>` with optional body. Confidence: 0.90
 - Conventional Commit types to use: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`. Confidence: 0.90
