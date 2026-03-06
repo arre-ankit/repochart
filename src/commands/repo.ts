@@ -52,7 +52,7 @@ export async function handleRepo(repo: string, options: RepoOptions): Promise<vo
       initialValue: true,
     });
     if (shouldLogin !== true) {
-      cancel('Run `gh auth login` then re-run repopulse.');
+      cancel('Run `gh auth login` then re-run repochart.');
       process.exit(0);
     }
     const { spawn } = await import('child_process');

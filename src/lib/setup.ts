@@ -100,7 +100,7 @@ export async function ensureGhReady(): Promise<void> {
   if (isGhInstalled()) return;
 
   console.log('');
-  intro(pc.bgWhite(pc.black(' RepoPulse setup ')));
+  intro(pc.bgWhite(pc.black(' RepoChart setup ')));
 
   note(
     `${pc.bold('GitHub CLI (gh)')} is required but not installed.\n` +
@@ -114,7 +114,7 @@ export async function ensureGhReady(): Promise<void> {
   });
 
   if (shouldInstall !== true) {
-    cancel('Install gh manually from https://cli.github.com and re-run repopulse.');
+    cancel('Install gh manually from https://cli.github.com and re-run repochart.');
     process.exit(0);
   }
 
@@ -180,7 +180,7 @@ export async function ensureGhReady(): Promise<void> {
   });
 
   if (shouldAuth !== true) {
-    cancel('Run `gh auth login` then re-run repopulse.');
+    cancel('Run `gh auth login` then re-run repochart.');
     process.exit(0);
   }
 
