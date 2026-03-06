@@ -5,12 +5,11 @@ import { ensureGhReady } from '../lib/setup.js';
 import {
   checkGhAuth,
   fetchStargazersSampled,
-  fetchCommits,
+  fetchCommitActivity,
   fetchContributors,
   fetchLanguages,
   fetchRepoInfo,
   type Stargazer,
-  type Commit,
 } from '../lib/github.js';
 import {
   renderStarsChart,
@@ -28,8 +27,6 @@ interface RepoOptions {
   output?: string;
   all?: boolean;
 }
-
-const DEFAULT_COMMIT_PAGES = 10;
 
 export async function handleRepo(repo: string, options: RepoOptions): Promise<void> {
   const parts = repo.split('/');
@@ -80,7 +77,7 @@ export async function handleRepo(repo: string, options: RepoOptions): Promise<vo
       const repoInfo = await fetchRepoInfo(owner, repoName);
 
       spinner.text = `Sampling star history (${fmtNum(repoInfo.stargazers_count)} stars)...`;
-      const stargazers = await fetchStargazersSampled(owner, repoName, repoInfo.stargazers_count);
+      const { stargazers } = await fetchStargazersSampled(owner, repoName, repoInfo.stargazers_count);
       const starsData = processStarsData(stargazers);
 
       spinner.text = 'Generating SVG...';
@@ -100,23 +97,19 @@ export async function handleRepo(repo: string, options: RepoOptions): Promise<vo
         const repoInfo = await fetchRepoInfo(owner, repoName);
 
         spinner.text = `Sampling star history (${fmtNum(repoInfo.stargazers_count)} stars)...`;
-        const stargazers = await fetchStargazersSampled(owner, repoName, repoInfo.stargazers_count);
+        const { stargazers, capped } = await fetchStargazersSampled(owner, repoName, repoInfo.stargazers_count);
         spinner.stop();
 
-        renderStarsChart(processStarsData(stargazers), owner, repoName, repoInfo.stargazers_count);
+        renderStarsChart(processStarsData(stargazers), owner, repoName, repoInfo.stargazers_count, capped);
         break;
       }
 
       case 'commits': {
-        const maxPages = options.all ? Infinity : DEFAULT_COMMIT_PAGES;
-        spinner.text = 'Fetching commits...';
-        const commits = await fetchCommits(owner, repoName, maxPages);
+        spinner.text = 'Fetching commit activity...';
+        const weeks = await fetchCommitActivity(owner, repoName);
         spinner.stop();
 
-        renderCommitsChart(processCommitsData(commits), owner, repoName);
-        if (!options.all && commits.length >= maxPages * 100) {
-          console.log(pc.yellow('  ⚠  Showing partial history. Use --all for the full dataset.\n'));
-        }
+        renderCommitsChart(weeks, owner, repoName);
         break;
       }
 
@@ -169,20 +162,4 @@ function processStarsData(stargazers: Stargazer[]): { date: string; cumulative: 
     .map(([date, n]) => { cum += n; return { date, cumulative: cum }; });
 }
 
-function processCommitsData(commits: Commit[]): { week: string; count: number }[] {
-  const byWeek = new Map<string, number>();
-  for (const c of commits) {
-    const w = weekStart(new Date(c.commit.author.date));
-    byWeek.set(w, (byWeek.get(w) ?? 0) + 1);
-  }
-  return Array.from(byWeek.entries())
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([week, count]) => ({ week, count }));
-}
 
-function weekStart(date: Date): string {
-  const d = new Date(date);
-  const day = d.getDay();
-  d.setDate(d.getDate() - day + (day === 0 ? -6 : 1));
-  return d.toISOString().split('T')[0];
-}

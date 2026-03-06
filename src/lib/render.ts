@@ -55,13 +55,17 @@ export function renderStarsChart(
   data: { date: string; cumulative: number }[],
   owner: string,
   repo: string,
-  totalStars: number
+  totalStars: number,
+  capped = false
 ): void {
   const width = cw();
 
   console.log('');
   console.log(`  ${pc.bold('⭐ Stars Growth')} · ${pc.cyan(`${owner}/${repo}`)}`);
   console.log(`  ${pc.gray(`${fmtNum(totalStars)} total stars · ${data.length.toLocaleString()} points sampled`)}`);
+  if (capped) {
+    console.log(`  ${pc.yellow('⚠  GitHub API only exposes the first 40k stars — chart shows that range')}`);
+  }
   console.log('');
 
   if (data.length === 0) {
@@ -82,7 +86,7 @@ export function renderStarsChart(
   }
 
   console.log(`  ${pc.gray('First star   ')}${fmtDateLong(data[0].date)}`);
-  console.log(`  ${pc.gray('Latest star  ')}${fmtDateLong(data[data.length - 1].date)}`);
+  console.log(`  ${pc.gray('Latest star  ')}${fmtDateLong(data[data.length - 1].date)}${capped ? pc.gray('  (API limit)') : ''}`);
   if (peakDate) {
     console.log(`  ${pc.gray('Peak day     ')}${fmtDateLong(peakDate)}  ${pc.yellow(`+${peakDaily.toLocaleString()} stars`)}`);
   }

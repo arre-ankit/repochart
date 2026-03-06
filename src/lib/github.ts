@@ -98,17 +98,25 @@ export async function fetchStargazers(
   );
 }
 
+// GitHub's stargazers API is hard-capped at 400 pages (40,000 results).
+const GH_STARGAZERS_MAX_PAGES = 400;
+
 /**
- * Fast sampled fetch: picks N evenly-spaced pages across the full star history
- * and fetches them all in parallel — no sequential page walking.
+ * Fast sampled fetch: picks N evenly-spaced pages across the accessible star
+ * history and fetches them all in parallel — no sequential page walking.
+ *
+ * Note: GitHub caps the stargazers endpoint at 400 pages (40k stars). For
+ * repos with more stars, only the first 40k are accessible via this API.
  */
 export async function fetchStargazersSampled(
   owner: string,
   repo: string,
   totalStars: number,
   targetPoints = 500
-): Promise<Stargazer[]> {
-  const totalPages = Math.max(1, Math.ceil(totalStars / 100));
+): Promise<{ stargazers: Stargazer[]; capped: boolean }> {
+  const rawPages = Math.max(1, Math.ceil(totalStars / 100));
+  const capped = rawPages > GH_STARGAZERS_MAX_PAGES;
+  const totalPages = Math.min(rawPages, GH_STARGAZERS_MAX_PAGES);
   const pagesToFetch = Math.min(totalPages, Math.ceil(targetPoints / 100));
 
   const pageNums =
@@ -129,15 +137,34 @@ export async function fetchStargazersSampled(
     )
   );
 
-  return results.flat().sort((a, b) => a.starred_at.localeCompare(b.starred_at));
+  const stargazers = results.flat().sort((a, b) => a.starred_at.localeCompare(b.starred_at));
+  return { stargazers, capped };
 }
 
-export async function fetchCommits(
+interface CommitActivityWeek {
+  week: number;  // Unix timestamp
+  total: number;
+  days: number[];
+}
+
+export interface CommitWeek {
+  week: string;  // ISO date string
+  count: number;
+}
+
+export async function fetchCommitActivity(
   owner: string,
-  repo: string,
-  maxPages?: number
-): Promise<Commit[]> {
-  return ghApiPaginated<Commit>(`/repos/${owner}/${repo}/commits`, [], maxPages);
+  repo: string
+): Promise<CommitWeek[]> {
+  const data = await ghApiSingle<CommitActivityWeek[]>(
+    `/repos/${owner}/${repo}/stats/commit_activity`
+  );
+  return data
+    .filter((w) => w.total > 0)
+    .map((w) => ({
+      week: new Date(w.week * 1000).toISOString().split('T')[0],
+      count: w.total,
+    }));
 }
 
 export async function fetchContributors(owner: string, repo: string): Promise<Contributor[]> {
