@@ -1,6 +1,7 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { Command } from 'commander';
+import clearConsole from 'clear-any-console';
 import { showBanner } from './lib/banner.js';
 import { handleRepo } from './commands/repo.js';
 import { handleCompare } from './commands/compare.js';
@@ -10,7 +11,10 @@ const pkg = JSON.parse(
 ) as { version: string };
 
 const isVersionOrHelp = process.argv.some((a) => a === '-v' || a === '--version');
-if (!isVersionOrHelp) showBanner();
+if (!isVersionOrHelp) {
+  clearConsole();
+  showBanner();
+}
 
 const program = new Command();
 
