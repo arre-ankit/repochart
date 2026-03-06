@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="920" y2="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0f0f1a"/>
+      <stop offset="100%" stop-color="#1a1a2e"/>
+    </linearGradient>
+    <linearGradient id="spark" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#facc15"/>
+    </linearGradient>
+    <linearGradient id="commitSpark" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#4ade80"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Window -->
+  <rect width="920" height="520" rx="12" fill="url(#bg)"/>
+  <rect x="0.5" y="0.5" width="919" height="519" rx="12" stroke="#333" stroke-width="1" fill="none"/>
+
+  <!-- Title bar -->
+  <rect width="920" height="40" rx="12" fill="#1e1e2e"/>
+  <rect y="28" width="920" height="12" fill="#1e1e2e"/>
+  <line x1="0" y1="40" x2="920" y2="40" stroke="#333" stroke-width="0.5"/>
+  <circle cx="20" cy="20" r="6" fill="#ff5f57"/>
+  <circle cx="40" cy="20" r="6" fill="#febc2e"/>
+  <circle cx="60" cy="20" r="6" fill="#28c840"/>
+  <text x="460" y="25" text-anchor="middle" fill="#888" font-family="SF Mono,Menlo,monospace" font-size="13">repochart — Terminal</text>
+
+  <!-- Command prompt -->
+  <text x="30" y="72" fill="#6c6c8a" font-family="SF Mono,Menlo,monospace" font-size="13">❯</text>
+  <text x="50" y="72" fill="#e0e0e0" font-family="SF Mono,Menlo,monospace" font-size="13">repochart vercel/next.js --overview</text>
+
+  <!-- Banner -->
+  <text x="30" y="108" fill="#22d3ee" font-family="SF Mono,Menlo,monospace" font-size="20" font-weight="bold" filter="url(#glow)">RepoChart</text>
+  <text x="200" y="108" fill="#555" font-family="SF Mono,Menlo,monospace" font-size="12">GitHub repository analytics · in your terminal</text>
+
+  <!-- Stars section -->
+  <text x="30" y="148" fill="#e0e0e0" font-family="SF Mono,Menlo,monospace" font-size="14" font-weight="bold">⭐ Stars Growth</text>
+  <text x="175" y="148" fill="#22d3ee" font-family="SF Mono,Menlo,monospace" font-size="13">· vercel/next.js</text>
+  <text x="30" y="168" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="12">138.2k total stars · 400 points sampled</text>
+
+  <!-- Stars sparkline -->
+  <g transform="translate(30, 178)">
+    <rect x="0" y="28" width="8" height="2" fill="url(#spark)" rx="1"/>
+    <rect x="10" y="26" width="8" height="4" fill="url(#spark)" rx="1"/>
+    <rect x="20" y="24" width="8" height="6" fill="url(#spark)" rx="1"/>
+    <rect x="30" y="22" width="8" height="8" fill="url(#spark)" rx="1"/>
+    <rect x="40" y="20" width="8" height="10" fill="url(#spark)" rx="1"/>
+    <rect x="50" y="18" width="8" height="12" fill="url(#spark)" rx="1"/>
+    <rect x="60" y="16" width="8" height="14" fill="url(#spark)" rx="1"/>
+    <rect x="70" y="14" width="8" height="16" fill="url(#spark)" rx="1"/>
+    <rect x="80" y="12" width="8" height="18" fill="url(#spark)" rx="1"/>
+    <rect x="90" y="10" width="8" height="20" fill="url(#spark)" rx="1"/>
+    <rect x="100" y="9" width="8" height="21" fill="url(#spark)" rx="1"/>
+    <rect x="110" y="8" width="8" height="22" fill="url(#spark)" rx="1"/>
+    <rect x="120" y="7" width="8" height="23" fill="url(#spark)" rx="1"/>
+    <rect x="130" y="6" width="8" height="24" fill="url(#spark)" rx="1"/>
+    <rect x="140" y="5" width="8" height="25" fill="url(#spark)" rx="1"/>
+    <rect x="150" y="4" width="8" height="26" fill="url(#spark)" rx="1"/>
+    <rect x="160" y="3" width="8" height="27" fill="url(#spark)" rx="1"/>
+    <rect x="170" y="2" width="8" height="28" fill="url(#spark)" rx="1"/>
+    <rect x="180" y="1" width="8" height="29" fill="url(#spark)" rx="1"/>
+    <rect x="190" y="0" width="8" height="30" fill="url(#spark)" rx="1"/>
+    <rect x="200" y="0" width="8" height="30" fill="url(#spark)" rx="1"/>
+    <rect x="210" y="0" width="8" height="30" fill="url(#spark)" rx="1"/>
+    <rect x="220" y="0" width="8" height="30" fill="url(#spark)" rx="1"/>
+    <rect x="230" y="0" width="8" height="30" fill="url(#spark)" rx="1"/>
+    <rect x="240" y="0" width="8" height="30" fill="url(#spark)" rx="1"/>
+  </g>
+  <text x="30" y="224" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="11">Oct '16</text>
+  <text x="240" y="224" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="11">Mar '26</text>
+
+  <!-- Commits section -->
+  <text x="30" y="258" fill="#e0e0e0" font-family="SF Mono,Menlo,monospace" font-size="14" font-weight="bold">📊 Commits Activity</text>
+  <text x="215" y="258" fill="#22d3ee" font-family="SF Mono,Menlo,monospace" font-size="13">· vercel/next.js</text>
+  <text x="30" y="278" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="12">6,108 commits · 52 weeks</text>
+
+  <!-- Commits sparkline -->
+  <g transform="translate(30, 288)">
+    <rect x="0" y="18" width="8" height="12" fill="url(#commitSpark)" rx="1"/>
+    <rect x="10" y="14" width="8" height="16" fill="url(#commitSpark)" rx="1"/>
+    <rect x="20" y="8" width="8" height="22" fill="url(#commitSpark)" rx="1"/>
+    <rect x="30" y="12" width="8" height="18" fill="url(#commitSpark)" rx="1"/>
+    <rect x="40" y="20" width="8" height="10" fill="url(#commitSpark)" rx="1"/>
+    <rect x="50" y="16" width="8" height="14" fill="url(#commitSpark)" rx="1"/>
+    <rect x="60" y="6" width="8" height="24" fill="url(#commitSpark)" rx="1"/>
+    <rect x="70" y="2" width="8" height="28" fill="url(#commitSpark)" rx="1"/>
+    <rect x="80" y="10" width="8" height="20" fill="url(#commitSpark)" rx="1"/>
+    <rect x="90" y="4" width="8" height="26" fill="url(#commitSpark)" rx="1"/>
+    <rect x="100" y="0" width="8" height="30" fill="url(#commitSpark)" rx="1"/>
+    <rect x="110" y="6" width="8" height="24" fill="url(#commitSpark)" rx="1"/>
+    <rect x="120" y="14" width="8" height="16" fill="url(#commitSpark)" rx="1"/>
+    <rect x="130" y="10" width="8" height="20" fill="url(#commitSpark)" rx="1"/>
+    <rect x="140" y="8" width="8" height="22" fill="url(#commitSpark)" rx="1"/>
+    <rect x="150" y="12" width="8" height="18" fill="url(#commitSpark)" rx="1"/>
+    <rect x="160" y="4" width="8" height="26" fill="url(#commitSpark)" rx="1"/>
+    <rect x="170" y="8" width="8" height="22" fill="url(#commitSpark)" rx="1"/>
+    <rect x="180" y="16" width="8" height="14" fill="url(#commitSpark)" rx="1"/>
+    <rect x="190" y="10" width="8" height="20" fill="url(#commitSpark)" rx="1"/>
+    <rect x="200" y="6" width="8" height="24" fill="url(#commitSpark)" rx="1"/>
+    <rect x="210" y="2" width="8" height="28" fill="url(#commitSpark)" rx="1"/>
+    <rect x="220" y="8" width="8" height="22" fill="url(#commitSpark)" rx="1"/>
+    <rect x="230" y="14" width="8" height="16" fill="url(#commitSpark)" rx="1"/>
+    <rect x="240" y="10" width="8" height="20" fill="url(#commitSpark)" rx="1"/>
+  </g>
+
+  <!-- Right side: Contributors + Languages -->
+
+  <!-- Contributors -->
+  <text x="500" y="148" fill="#e0e0e0" font-family="SF Mono,Menlo,monospace" font-size="14" font-weight="bold">👥 Top Contributors</text>
+  <text x="500" y="168" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="12">429 total contributors</text>
+
+  <text x="500" y="192" fill="#888" font-family="SF Mono,Menlo,monospace" font-size="12"> 1</text>
+  <text x="530" y="192" fill="#ccc" font-family="SF Mono,Menlo,monospace" font-size="12">ijjk</text>
+  <rect x="610" y="181" width="200" height="14" rx="2" fill="#a855f7"/>
+  <text x="820" y="192" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="11">3,267</text>
+
+  <text x="500" y="214" fill="#888" font-family="SF Mono,Menlo,monospace" font-size="12"> 2</text>
+  <text x="530" y="214" fill="#ccc" font-family="SF Mono,Menlo,monospace" font-size="12">timneutkens</text>
+  <rect x="610" y="203" width="166" height="14" rx="2" fill="#a855f7"/>
+  <rect x="776" y="203" width="34" height="14" rx="2" fill="#555"/>
+  <text x="820" y="214" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="11">2,723</text>
+
+  <text x="500" y="236" fill="#888" font-family="SF Mono,Menlo,monospace" font-size="12"> 3</text>
+  <text x="530" y="236" fill="#ccc" font-family="SF Mono,Menlo,monospace" font-size="12">sokra</text>
+  <rect x="610" y="225" width="146" height="14" rx="2" fill="#a855f7"/>
+  <rect x="756" y="225" width="54" height="14" rx="2" fill="#555"/>
+  <text x="820" y="236" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="11">2,382</text>
+
+  <text x="500" y="258" fill="#888" font-family="SF Mono,Menlo,monospace" font-size="12"> 4</text>
+  <text x="530" y="258" fill="#ccc" font-family="SF Mono,Menlo,monospace" font-size="12">wyattjoh</text>
+  <rect x="610" y="247" width="90" height="14" rx="2" fill="#a855f7"/>
+  <rect x="700" y="247" width="110" height="14" rx="2" fill="#555"/>
+  <text x="820" y="258" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="11">1,467</text>
+
+  <text x="500" y="280" fill="#888" font-family="SF Mono,Menlo,monospace" font-size="12"> 5</text>
+  <text x="530" y="280" fill="#ccc" font-family="SF Mono,Menlo,monospace" font-size="12">ztanner</text>
+  <rect x="610" y="269" width="72" height="14" rx="2" fill="#a855f7"/>
+  <rect x="682" y="269" width="128" height="14" rx="2" fill="#555"/>
+  <text x="820" y="280" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="11">1,172</text>
+
+  <!-- Languages -->
+  <text x="500" y="320" fill="#e0e0e0" font-family="SF Mono,Menlo,monospace" font-size="14" font-weight="bold">🌐 Languages</text>
+
+  <text x="500" y="348" fill="#ccc" font-family="SF Mono,Menlo,monospace" font-size="12">JavaScript</text>
+  <rect x="610" y="337" width="160" height="14" rx="2" fill="#eab308"/>
+  <rect x="770" y="337" width="40" height="14" rx="2" fill="#555"/>
+  <text x="820" y="348" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="11">55.2%</text>
+
+  <text x="500" y="370" fill="#ccc" font-family="SF Mono,Menlo,monospace" font-size="12">TypeScript</text>
+  <rect x="610" y="359" width="100" height="14" rx="2" fill="#3b82f6"/>
+  <rect x="710" y="359" width="100" height="14" rx="2" fill="#555"/>
+  <text x="820" y="370" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="11">29.9%</text>
+
+  <text x="500" y="392" fill="#ccc" font-family="SF Mono,Menlo,monospace" font-size="12">Rust</text>
+  <rect x="610" y="381" width="56" height="14" rx="2" fill="#eab308"/>
+  <rect x="666" y="381" width="144" height="14" rx="2" fill="#555"/>
+  <text x="820" y="392" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="11">13.6%</text>
+
+  <text x="500" y="414" fill="#ccc" font-family="SF Mono,Menlo,monospace" font-size="12">CSS</text>
+  <rect x="610" y="403" width="8" height="14" rx="2" fill="#a855f7"/>
+  <rect x="618" y="403" width="192" height="14" rx="2" fill="#555"/>
+  <text x="820" y="414" fill="#777" font-family="SF Mono,Menlo,monospace" font-size="11"> 0.8%</text>
+
+  <!-- Bottom tagline -->
+  <text x="30" y="348" fill="#888" font-family="SF Mono,Menlo,monospace" font-size="12">Peak week    175 commits</text>
+  <text x="30" y="368" fill="#888" font-family="SF Mono,Menlo,monospace" font-size="12">Avg / week   117 commits</text>
+
+  <!-- Divider line -->
+  <line x1="480" y1="135" x2="480" y2="430" stroke="#333" stroke-width="0.5" stroke-dasharray="4,4"/>
+
+  <!-- Footer -->
+  <text x="30" y="490" fill="#555" font-family="SF Mono,Menlo,monospace" font-size="12">$ npm i -g repochart</text>
+  <text x="460" y="490" text-anchor="middle" fill="#22d3ee" font-family="SF Mono,Menlo,monospace" font-size="13" font-weight="bold" opacity="0.6">GitHub repository analytics · in your terminal</text>
+</svg>
