@@ -5,12 +5,12 @@
 GitHub repository analytics — right from your terminal.
 
 ```
-repochart vercel/next.js --chart stars
-repochart vercel/next.js --chart commits
-repochart vercel/next.js --chart contributors
-repochart vercel/next.js --chart languages
-repochart vercel/next.js --overview
-repochart compare vercel/next.js facebook/react
+npx repochart compare openclaw/openclaw vercel/next.js
+npx repochart vercel/next.js --overview
+npx repochart vercel/next.js --chart stars
+npx repochart vercel/next.js --chart commits
+npx repochart vercel/next.js --chart contributors
+npx repochart vercel/next.js --chart languages
 ```
 
 ## Prerequisites
@@ -31,7 +31,7 @@ npm install -g repochart
 Or run without installing:
 
 ```bash
-npx repochart vercel/next.js --overview
+npx repochart openclaw/openclaw --overview
 ```
 
 ## Usage
@@ -122,11 +122,7 @@ RepoChart uses the **GitHub CLI** (`gh`) for all API calls — no tokens to mana
 # No install needed — run directly with npx
 npx repochart vercel/next.js --overview
 npx repochart compare vercel/next.js facebook/react
-
-# Or install globally and drop the npx
-npm install -g repochart
-repochart compare microsoft/vscode neovim/neovim
-repochart ankitlb/commandcode --chart stars
+npx repochart compare microsoft/vscode neovim/neovim
 repochart vercel/next.js --chart commits
 repochart microsoft/vscode --chart languages
 ```
