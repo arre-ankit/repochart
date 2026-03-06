@@ -1,5 +1,6 @@
 import pc from 'picocolors';
 import type { Contributor, Languages } from './github.js';
+import { fetchAvatarLines } from './terminal-image.js';
 
 const SPARK = '▁▂▃▄▅▆▇█';
 
@@ -182,5 +183,19 @@ export function renderLanguagesChart(
     console.log(`  ${label}  ${bar}  ${pc.gray(pctStr)}`);
   });
 
+  console.log('');
+}
+
+// ─── Owner Avatar ─────────────────────────────────────────────────────────────
+
+export async function renderOwnerAvatar({ owner, repo }: { readonly owner: string; readonly repo: string }): Promise<void> {
+  const lines = await fetchAvatarLines({ owner, height: 8 });
+  if (lines.length === 0) return;
+
+  console.log('');
+  for (const line of lines) {
+    console.log(`  ${line}`);
+  }
+  console.log(`  ${pc.bold(pc.cyan(`${owner}/${repo}`))}`);
   console.log('');
 }

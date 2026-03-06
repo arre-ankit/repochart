@@ -1,5 +1,6 @@
 import pc from 'picocolors';
 import type { Contributor, Languages, CommitWeek } from './github.js';
+import { fetchAvatarLines } from './terminal-image.js';
 
 const SPARK = '▁▂▃▄▅▆▇█';
 
@@ -92,14 +93,32 @@ export interface CompareData {
   languagesB: Languages;
 }
 
-export function renderComparison(d: CompareData): void {
+export async function renderComparison(d: CompareData): Promise<void> {
   const col = colW();
   // sparkline fills col minus the 2-char left indent
   const sparkW = col - 2;
 
   console.log('');
 
-  // ── Header ────────────────────────────────────────────────────────────────
+  // ── Header with avatars ───────────────────────────────────────────────────
+  const ownerA = d.repoA.split('/')[0] ?? '';
+  const ownerB = d.repoB.split('/')[0] ?? '';
+  const [avatarLinesA, avatarLinesB] = await Promise.all([
+    fetchAvatarLines({ owner: ownerA, height: 4 }),
+    fetchAvatarLines({ owner: ownerB, height: 4 }),
+  ]);
+
+  if (avatarLinesA.length > 0 || avatarLinesB.length > 0) {
+    const maxRows = Math.max(avatarLinesA.length, avatarLinesB.length);
+    const avatarLeft: string[] = [];
+    const avatarRight: string[] = [];
+    for (let i = 0; i < maxRows; i++) {
+      avatarLeft.push(avatarLinesA[i] ? `  ${avatarLinesA[i]}` : '');
+      avatarRight.push(avatarLinesB[i] ? `  ${avatarLinesB[i]}` : '');
+    }
+    sideBySide(avatarLeft, avatarRight, col);
+  }
+
   sideBySide(
     [pc.bold(pc.cyan(d.repoA))],
     [pc.bold(pc.cyan(d.repoB))],

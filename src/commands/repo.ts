@@ -15,6 +15,7 @@ import {
   renderCommitsChart,
   renderContributorsChart,
   renderLanguagesChart,
+  renderOwnerAvatar,
 } from '../lib/render.js';
 import { generateStarsSVG as buildStarsSVG } from '../lib/charts.js';
 import { processStarsData } from '../lib/process.js';
@@ -86,6 +87,7 @@ export async function handleRepo(repo: string, options: RepoOptions): Promise<vo
       ]);
       spinner.stop();
 
+      await renderOwnerAvatar({ owner, repo: repoName });
       renderStarsChart(processStarsData(stargazers), owner, repoName, repoInfo.stargazers_count, capped);
       renderCommitsChart(weeks, owner, repoName);
       renderContributorsChart(contributors, owner, repoName);
@@ -122,6 +124,7 @@ export async function handleRepo(repo: string, options: RepoOptions): Promise<vo
         const { stargazers, capped } = await fetchStargazersSampled(owner, repoName, repoInfo.stargazers_count);
         spinner.stop();
 
+        await renderOwnerAvatar({ owner, repo: repoName });
         renderStarsChart(processStarsData(stargazers), owner, repoName, repoInfo.stargazers_count, capped);
         break;
       }
@@ -131,6 +134,7 @@ export async function handleRepo(repo: string, options: RepoOptions): Promise<vo
         const weeks = await fetchCommitActivity(owner, repoName);
         spinner.stop();
 
+        await renderOwnerAvatar({ owner, repo: repoName });
         renderCommitsChart(weeks, owner, repoName);
         break;
       }
@@ -140,6 +144,7 @@ export async function handleRepo(repo: string, options: RepoOptions): Promise<vo
         const contributors = await fetchContributors(owner, repoName);
         spinner.stop();
 
+        await renderOwnerAvatar({ owner, repo: repoName });
         renderContributorsChart(contributors, owner, repoName);
         break;
       }
@@ -149,6 +154,7 @@ export async function handleRepo(repo: string, options: RepoOptions): Promise<vo
         const languages = await fetchLanguages(owner, repoName);
         spinner.stop();
 
+        await renderOwnerAvatar({ owner, repo: repoName });
         renderLanguagesChart(languages, owner, repoName);
         break;
       }

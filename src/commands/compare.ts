@@ -94,7 +94,7 @@ export async function handleCompare(repo1: string, repo2: string): Promise<void>
 
     spinner.stop();
 
-    renderComparison({
+    await renderComparison({
       repoA: `${ownerA}/${nameA}`,
       repoB: `${ownerB}/${nameB}`,
       starsA: processStarsData(sgA),
