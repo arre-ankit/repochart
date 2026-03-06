@@ -36,7 +36,6 @@
   "dependencies": {
     "@clack/prompts": "^0.9.1",
     "@napi-rs/canvas": "^0.1.57",
-    "chart.js": "^4.4.7",
     "clear-any-console": "^1.16.3",
     "commander": "^12.1.0",
     "figlet": "^1.8.0",

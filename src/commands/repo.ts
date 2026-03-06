@@ -17,7 +17,6 @@ import {
   renderLanguagesChart,
   renderOwnerAvatar,
 } from '../lib/render.js';
-import { generateStarsSVG as buildStarsSVG } from '../lib/charts.js';
 import { processStarsData } from '../lib/process.js';
 
 type ChartType = 'stars' | 'commits' | 'contributors' | 'languages';
@@ -25,8 +24,6 @@ type ChartType = 'stars' | 'commits' | 'contributors' | 'languages';
 interface RepoOptions {
   chart: ChartType;
   overview?: boolean;
-  readmeStars?: boolean;
-  output?: string;
   all?: boolean;
 }
 
@@ -92,25 +89,6 @@ export async function handleRepo(repo: string, options: RepoOptions): Promise<vo
       renderCommitsChart(weeks, owner, repoName);
       renderContributorsChart(contributors, owner, repoName);
       renderLanguagesChart(languages, owner, repoName);
-      return;
-    }
-
-    // ── README SVG ────────────────────────────────────────────────────────────
-    if (options.readmeStars) {
-      spinner.text = 'Fetching repo info...';
-      const repoInfo = await fetchRepoInfo(owner, repoName);
-
-      spinner.text = `Sampling star history (${fmtNum(repoInfo.stargazers_count)} stars)...`;
-      const { stargazers } = await fetchStargazersSampled(owner, repoName, repoInfo.stargazers_count);
-      const starsData = processStarsData(stargazers);
-
-      spinner.text = 'Generating SVG...';
-      const outputPath = options.output ?? 'stars.svg';
-      await buildStarsSVG(starsData, owner, repoName, repoInfo.stargazers_count, outputPath);
-
-      spinner.succeed(`Generated ${pc.green(outputPath)}`);
-      console.log(`\n${pc.gray('README embed:')}`);
-      console.log(pc.cyan(`![Stars Growth](${outputPath})`));
       return;
     }
 

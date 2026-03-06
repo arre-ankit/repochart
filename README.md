@@ -11,7 +11,6 @@ repochart vercel/next.js --chart contributors
 repochart vercel/next.js --chart languages
 repochart vercel/next.js --overview
 repochart compare vercel/next.js facebook/react
-repochart vercel/next.js --readme-stars
 ```
 
 ## Prerequisites
@@ -43,8 +42,6 @@ Arguments:
 Options:
   --chart <type>      Chart type: stars | commits | contributors | languages  (default: stars)
   --overview          Show all stats at once: stars, commits, contributors, languages
-  --readme-stars      Generate a stars.svg badge for README embedding
-  --output <path>     Output file path
   --all               Fetch all pages (may be slow for large repos)
   -v, --version       Output the version number
   -h, --help          Display help
@@ -60,7 +57,6 @@ Options:
 | `--chart languages` | Language breakdown with bar chart |
 | `--overview` | All four charts in one command |
 | `compare <repo1> <repo2>` | Side-by-side comparison of two repos |
-| `--readme-stars` | Dark-theme SVG badge for README |
 
 ## Compare two repos side by side
 
@@ -112,18 +108,6 @@ repochart vercel/next.js --overview
 
 Fetches stars, commits, contributors, and languages in parallel and renders all four charts sequentially in your terminal.
 
-## README Stars Badge
-
-```bash
-repochart vercel/next.js --readme-stars
-```
-
-Outputs `stars.svg` and prints the embed snippet:
-
-```markdown
-![Stars Growth](./stars.svg)
-```
-
 ## Authentication
 
 RepoChart uses the **GitHub CLI** (`gh`) for all API calls — no tokens to manage. Just run `gh auth login` once and you're set. Authenticated requests get 5,000 req/hour vs 60 for unauthenticated.
@@ -142,9 +126,6 @@ repochart vercel/next.js --overview
 repochart ankitlb/commandcode --chart stars
 repochart vercel/next.js --chart commits
 repochart microsoft/vscode --chart languages
-
-# README badge
-repochart facebook/react --readme-stars --output react-stars.svg
 ```
 
 ## Development
