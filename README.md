@@ -8,6 +8,7 @@ repochart vercel/next.js --chart commits
 repochart vercel/next.js --chart contributors
 repochart vercel/next.js --chart languages
 repochart vercel/next.js --overview
+repochart compare vercel/next.js facebook/react
 repochart vercel/next.js --readme-stars
 ```
 
@@ -55,7 +56,16 @@ Options:
 | `--chart contributors` | Top 15 contributors by commits |
 | `--chart languages` | Language breakdown |
 | `--overview` | All four charts in one command |
+| `compare <repo1> <repo2>` | Side-by-side comparison of two repos |
 | `--readme-stars` | Dark-theme SVG badge for README |
+
+## Compare two repos side by side
+
+```bash
+repochart compare vercel/next.js facebook/react
+```
+
+Fetches stars, commits, contributors, and languages for both repos in parallel and renders them side by side in the terminal. The winner in each numeric category (total stars, total commits) is highlighted in green.
 
 ## Overview — all stats at once
 

@@ -3,6 +3,7 @@ import { join } from 'path';
 import { Command } from 'commander';
 import { showBanner } from './lib/banner.js';
 import { handleRepo } from './commands/repo.js';
+import { handleCompare } from './commands/compare.js';
 
 const pkg = JSON.parse(
   readFileSync(join(__dirname, '..', 'package.json'), 'utf-8')
@@ -25,5 +26,10 @@ program
   .option('--output <path>', 'Output file path (default: <type>-chart.png or stars.svg)')
   .option('--all', 'Fetch all pages — may be slow for large repos')
   .action(handleRepo);
+
+program
+  .command('compare <repo1> <repo2>')
+  .description('Compare two repositories side by side in the terminal')
+  .action(handleCompare);
 
 program.parse();
