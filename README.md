@@ -13,6 +13,8 @@ npx repochart vercel/next.js --chart contributors
 npx repochart vercel/next.js --chart languages
 ```
 
+![repochart compare demo](https://raw.githubusercontent.com/arre-ankit/repochart/refs/heads/main/.github/repochart-compare-demo.gif)
+
 ## Prerequisites
 
 Requires the [GitHub CLI](https://cli.github.com) to be installed and authenticated:
