@@ -156,10 +156,11 @@ export async function fetchCommitActivity(
   owner: string,
   repo: string
 ): Promise<CommitWeek[]> {
-  const data = await ghApiSingle<CommitActivityWeek[]>(
+  const weeks = await ghApiSingle<CommitActivityWeek[]>(
     `/repos/${owner}/${repo}/stats/commit_activity`
   );
-  return data
+  if (!Array.isArray(weeks)) return [];
+  return weeks
     .filter((w) => w.total > 0)
     .map((w) => ({
       week: new Date(w.week * 1000).toISOString().split('T')[0],
